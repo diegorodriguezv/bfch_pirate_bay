@@ -4,7 +4,7 @@ from chanutils import get_text, get_text_content, replace_entity, byte_size
 from chanutils import movie_title_year, series_season_episode
 from playitem import TorrentPlayItem, PlayItemList
 
-_SEARCH_URL = "https://thepiratebay.se/search/%s/0/99/200"
+_SEARCH_URL = "https://thepiratebay.se/search/%s/0/99/100,200"
 
 _FEEDLIST = [
   {'title':'Movies', 'url':'https://thepiratebay.se/top/201'},
