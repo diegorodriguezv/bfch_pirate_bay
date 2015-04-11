@@ -13,6 +13,7 @@ _FEEDLIST = [
   {'title':'HD - TV Shows', 'url':'https://thepiratebay.se/top/208'},
   {'title':'Music', 'url':'https://thepiratebay.se/top/101'},
   {'title':'FLAC', 'url':'https://thepiratebay.se/top/104'},
+  {'title':'Audio Books', 'url':'https://thepiratebay.se/top/102'},
 ]
 
 def name():
