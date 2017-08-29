@@ -47,12 +47,14 @@ def _extract(doc):
       continue
     el = select_one(l, "a[title='More from this category']")
     maincat = get_text(el)
-    if maincat == 'Video':
-      img = '/img/icons/film.svg'
-    elif maincat == 'Audio':
-      img = '/img/icons/music.svg'
-    else:
-      continue
+    img = '/img/icons/film.svg'
+    if maincat is not None:
+      if maincat == 'Video':
+        img = '/img/icons/film.svg'
+      elif maincat == 'Audio':
+        img = '/img/icons/music.svg'
+      else:
+        continue
     el = select_one(l, 'a.detLink')
     title = get_text(el)
     el = select_one(l, "a[title='Download this torrent using magnet']")
@@ -72,8 +74,10 @@ def _extract(doc):
     el = select_one(l, "td:nth-child(4)")
     peers = get_text(el)
     subtitle = chanutils.torrent.subtitle(size, seeds, peers)
+    subcat = "Movies"
     el = select_one(l, ":nth-child(3)")
-    subcat = get_text(el)
+    if el.text is not None:
+      subcat = get_text(el)
     subs = None
     if subcat.endswith("Movies"):
       subs = movie_title_year(title)
