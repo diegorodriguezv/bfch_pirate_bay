@@ -4,16 +4,16 @@ from chanutils import get_text, get_text_content, replace_entity, byte_size
 from chanutils import movie_title_year, series_season_episode
 from playitem import TorrentPlayItem, PlayItemList
 
-_SEARCH_URL = "https://thepiratebay.am/search/%s/0/99/100,200"
+_SEARCH_URL = "https://thepiratebay.org/search/%s/0/99/100,200"
 
 _FEEDLIST = [
-  {'title':'Movies', 'url':'https://thepiratebay.am/top/201'},
-  {'title':'HD - Movies', 'url':'https://thepiratebay.am/top/207'},
-  {'title':'TV Shows', 'url':'https://thepiratebay.am/top/205'},
-  {'title':'HD - TV Shows', 'url':'https://thepiratebay.am/top/208'},
-  {'title':'Music', 'url':'https://thepiratebay.am/top/101'},
-  {'title':'FLAC', 'url':'https://thepiratebay.am/top/104'},
-  {'title':'Audio Books', 'url':'https://thepiratebay.am/top/102'},
+  {'title':'Movies', 'url':'https://thepiratebay.org/top/201'},
+  {'title':'HD - Movies', 'url':'https://thepiratebay.org/top/207'},
+  {'title':'TV Shows', 'url':'https://thepiratebay.org/top/205'},
+  {'title':'HD - TV Shows', 'url':'https://thepiratebay.org/top/208'},
+  {'title':'Music', 'url':'https://thepiratebay.org/top/101'},
+  {'title':'FLAC', 'url':'https://thepiratebay.org/top/104'},
+  {'title':'Audio Books', 'url':'https://thepiratebay.org/top/102'},
 ]
 
 def name():
@@ -23,18 +23,18 @@ def image():
   return 'icon.png'
 
 def description():
-  return "The Pirate Bay Channel (<a target='_blank' href='https://thepiratebay.am'></a>)."
+  return "The Pirate Bay Channel (<a target='_blank' href='https://thepiratebay.org'>https://thepiratebay.org</a>)."
 
 def feedlist():
   return _FEEDLIST
 
 def feed(idx):
-  doc = get_doc(_FEEDLIST[idx]['url'], proxy=True)
+  doc = get_doc(_FEEDLIST[idx]['url'])
   return _extract(doc)
 
 def search(q):
   url = _SEARCH_URL % urllib.quote(q.encode('utf8'))
-  doc = get_doc(url, proxy=True)
+  doc = get_doc(url)
   return _extract(doc)
 
 def _extract(doc):
@@ -83,5 +83,7 @@ def _extract(doc):
       subs = movie_title_year(title)
     elif subcat.endswith("shows"):
       subs = series_season_episode(title)
+    if not url:
+      continue
     results.add(TorrentPlayItem(title, img, url, subtitle, subs=subs))
   return results
